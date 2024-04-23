@@ -15,6 +15,7 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
+    @Column(name = "email")
     private String email;
     @Column
     private String password;
