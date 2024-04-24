@@ -2,20 +2,18 @@ package vn.edu.tdtu.springrealestate.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import vn.edu.tdtu.springrealestate.models.AuthenticationResponse;
 import vn.edu.tdtu.springrealestate.models.Role;
 import vn.edu.tdtu.springrealestate.models.User;
 import vn.edu.tdtu.springrealestate.models.UserDto;
 import vn.edu.tdtu.springrealestate.repository.UserRepository;
-import vn.edu.tdtu.springrealestate.service.AuthenticationService;
+import vn.edu.tdtu.springrealestate.services.AuthenticationService;
 
 @Controller
 public class MainController {
@@ -32,7 +30,6 @@ public class MainController {
 
         return "index"; // display the home page
     }
-
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new UserDto());
@@ -81,5 +78,10 @@ public class MainController {
             return "redirect:/login";
         }
         return "contact"; // display the contact page
+    }
+    @GetMapping("/about")
+    public String about() {
+
+        return "about";
     }
 }

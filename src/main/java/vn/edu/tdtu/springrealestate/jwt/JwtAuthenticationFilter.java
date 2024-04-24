@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import vn.edu.tdtu.springrealestate.service.UserDetailsServiceImp;
+import vn.edu.tdtu.springrealestate.services.UserDetailsServiceImp;
 
 import java.io.IOException;
 

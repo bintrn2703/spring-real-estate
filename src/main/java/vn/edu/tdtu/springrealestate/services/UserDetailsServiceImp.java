@@ -1,4 +1,4 @@
-package vn.edu.tdtu.springrealestate.service;
+package vn.edu.tdtu.springrealestate.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package vn.edu.tdtu.springrealestate.service;
+package vn.edu.tdtu.springrealestate.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class PropertyService {
     }
     // find by username
     public Iterable<Property> getPropertiesByUsername(String username) {
-        return propertyRepository.findByUserEmail(username);
+        return propertyRepository.findByUserIdEmail(username);
     }
 
     public Property save(Property property) {

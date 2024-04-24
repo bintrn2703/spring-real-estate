@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.tdtu.springrealestate.models.AuthenticationResponse;
 import vn.edu.tdtu.springrealestate.models.User;
-import vn.edu.tdtu.springrealestate.service.AuthenticationService;
+import vn.edu.tdtu.springrealestate.services.AuthenticationService;
 
 @RestController
 public class TestController {

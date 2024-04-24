@@ -1,7 +1,5 @@
 package vn.edu.tdtu.springrealestate.config;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,9 +22,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vn.edu.tdtu.springrealestate.controllers.MainController;
 import vn.edu.tdtu.springrealestate.jwt.JwtAuthenticationFilter;
-import vn.edu.tdtu.springrealestate.service.UserDetailsServiceImp;
-
-import java.io.IOException;
+import vn.edu.tdtu.springrealestate.services.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
@@ -40,7 +36,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register").permitAll()
+                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/","/about","/contact","/property-list").permitAll()
                         .anyRequest().authenticated()
                 ).userDetailsService(userDetailsServiceImp)
                 .sessionManagement(session -> session

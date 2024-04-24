@@ -6,7 +6,7 @@ import vn.edu.tdtu.springrealestate.models.Property;
 import java.util.List;
 
 public interface PropertyRepository extends JpaRepository<Property, Long> {
-    public Iterable<Property> findByUserEmail(String email);
+    public Iterable<Property> findByUserIdEmail(String email);
     public Iterable<Property> findByTitleContaining(String title);
     public Iterable<Property> findByPriceBetween(double min, double max);
     public Iterable<Property> findByAreaBetween(double min, double max);
