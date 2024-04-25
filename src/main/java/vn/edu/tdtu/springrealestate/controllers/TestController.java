@@ -2,6 +2,7 @@ package vn.edu.tdtu.springrealestate.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +30,5 @@ public class TestController {
     public ResponseEntity<String> test() {
         return ResponseEntity.ok("Hello to Test!!");
     }
+
 }
