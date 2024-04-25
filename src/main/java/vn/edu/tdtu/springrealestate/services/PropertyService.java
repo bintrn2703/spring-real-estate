@@ -15,7 +15,9 @@ public class PropertyService {
 
         return propertyRepository.findAll();
     }
-    // find by username
+    public Property findById(Long id) {
+        return propertyRepository.findById(id).orElse(null);
+    }
     public Iterable<Property> getPropertiesByUsername(String username) {
         return propertyRepository.findByUserIdEmail(username);
     }
