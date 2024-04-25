@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/**","/").permitAll()
+                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/","/about","/contact","/property-list","/property-search/**","/**").permitAll()
                         .anyRequest().authenticated()
                 ).userDetailsService(userService)
                 .sessionManagement(session -> session

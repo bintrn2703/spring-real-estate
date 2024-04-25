@@ -93,4 +93,13 @@ public class MainController {
 
         return "property-agent";
     }
+
+//    @GetMapping("/property-search")
+//    public String Search() {
+//        return "search-keywords";
+//    }
+    @GetMapping("/property-detail")
+    public String PropertyDetail() {
+        return "property-detail";
+    }
 }
