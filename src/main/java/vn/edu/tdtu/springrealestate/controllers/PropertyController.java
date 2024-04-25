@@ -35,4 +35,12 @@ public class PropertyController {
         model.addAttribute("properties", properties);
         return "property-list";
     }
+
+    @GetMapping("/create-property")
+    public String createProperty(Model model) {
+        /*if(session.getAttribute("token") == null) {
+            return "redirect:/login";
+        }*/
+        return "create-property";
+    }
 }
