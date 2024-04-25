@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class Property {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,7 +28,6 @@ public class Property {
     private Integer bedroom;
     private Integer bathroom;
     private String status;
-    @Column(name = "thumbnail_image")
     private String thumbnailImage;
 
     public Property(Long id, User userId, String title, String type, String purpose, String description, String address, String location, Double price, Double area, Integer bedroom, Integer bathroom, String status) {

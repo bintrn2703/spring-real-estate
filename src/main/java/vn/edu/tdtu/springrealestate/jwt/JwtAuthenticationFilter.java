@@ -12,16 +12,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import vn.edu.tdtu.springrealestate.services.UserDetailsServiceImp;
+import vn.edu.tdtu.springrealestate.services.UserService;
 
 import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final UserDetailsServiceImp userDetailsService;
+    private final UserService userDetailsService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImp userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserService userDetailsService) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }

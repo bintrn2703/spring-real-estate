@@ -3,10 +3,6 @@ package vn.edu.tdtu.springrealestate.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,18 +13,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import vn.edu.tdtu.springrealestate.controllers.MainController;
 import vn.edu.tdtu.springrealestate.jwt.JwtAuthenticationFilter;
-import vn.edu.tdtu.springrealestate.services.UserDetailsServiceImp;
+import vn.edu.tdtu.springrealestate.services.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
-    private UserDetailsServiceImp userDetailsServiceImp;
+    private UserService userService;
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Bean
@@ -36,9 +28,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/","/about","/contact","/property-list").permitAll()
+                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/**","/").permitAll()
                         .anyRequest().authenticated()
-                ).userDetailsService(userDetailsServiceImp)
+                ).userDetailsService(userService)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

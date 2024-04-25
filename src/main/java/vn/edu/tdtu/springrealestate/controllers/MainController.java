@@ -24,10 +24,9 @@ public class MainController {
     public static final ThreadLocal<String> tokenHolder = new ThreadLocal<>();
     @GetMapping("/")
     public String index(HttpSession session) {
-        if(session.getAttribute("token") == null) {
+        /*if(session.getAttribute("token") == null) {
             return "redirect:/login";
-        }
-
+        }*/
         return "index"; // display the home page
     }
     @GetMapping("/login")
@@ -74,14 +73,24 @@ public class MainController {
 
     @GetMapping("/contact")
     public String contact(HttpSession session) {
-        if(session.getAttribute("token") == null) {
+        /*if(session.getAttribute("token") == null) {
             return "redirect:/login";
-        }
+        }*/
         return "contact"; // display the contact page
     }
     @GetMapping("/about")
     public String about() {
 
         return "about";
+    }
+    @GetMapping("/property-type")
+    public String propertyType() {
+
+        return "property-type";
+    }
+    @GetMapping("/property-agent")
+    public String propertyAgent() {
+
+        return "property-agent";
     }
 }

@@ -58,13 +58,13 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a th:href="@{'/contact'}" class="nav-item nav-link">About</a>
+                        <a th:href="@{'/about'}" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" class="dropdown-item">Property List</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" class="dropdown-item">Property Agent</a>
+                                <a th:href="@{/property-list}" class="dropdown-item">Property List</a>
+                                <a th:href="@{/property-type}" class="dropdown-item">Property Type</a>
+                                <a th:href="@{/property-agent}" class="dropdown-item">Property Agent</a>
                             </div>
                         </div>
                         <!--<div class="nav-item dropdown">
@@ -73,8 +73,8 @@
                                 <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                                 <a href="404.html" class="dropdown-item">404 Error</a>
                             </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>-->
+                        </div>-->
+                        <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
                     <a th:href="@{'/login'}" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
                 </div>
@@ -825,19 +825,19 @@
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+84 906 891 868</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                         <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://fb.com"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://yt.com"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Quick Links</h5>
-                        <a class="btn btn-link text-white-50" href="">About Us</a>
-                        <a class="btn btn-link text-white-50" href="">Contact Us</a>
-                        <a class="btn btn-link text-white-50" href="">Our Services</a>
-                        <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-                        <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                        <a class="btn btn-link text-white-50" th:href="@{/about}">About Us</a>
+                        <a class="btn btn-link text-white-50" th:href="@{/contact}">Contact Us</a>
+                        <a class="btn btn-link text-white-50" th:href="@{/}">Our Services</a>
+                        <a class="btn btn-link text-white-50" href="https://realtorparty.realtor/wp-content/uploads/2017/12/Programs-Grants-Grassroots-Consumer-Advocacy-Outreach-Privacy-Policy.pdf">Privacy Policy</a>
+                        <a class="btn btn-link text-white-50" href="https://www.investopedia.com/financial-edge/0810/7-must-have-real-estate-contract-conditions.aspx">Terms & Condition</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Photo Gallery</h5>
