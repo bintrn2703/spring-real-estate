@@ -75,7 +75,11 @@
                         </div>-->
                         <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
-                    <a th:href="@{'/login'}" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                    <div th:if="${session != null}">
+                        <span th:text="${session.username}"></span>
+                        <a th:href="@{'/logout'}" class="btn btn-primary px-3 d-none d-lg-flex">Logout</a>
+                    </div>
+
                 </div>
             </nav>
         </div>

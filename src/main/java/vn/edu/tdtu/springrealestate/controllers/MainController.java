@@ -1,5 +1,6 @@
 package vn.edu.tdtu.springrealestate.controllers;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,14 @@ public class MainController {
         /*if(session.getAttribute("token") == null) {
             return "redirect:/login";
         }*/
-        return "index"; // display the home page
+        return "index-unlogin"; // display the home page
     }
+
+    @GetMapping("/home")
+    public String home() {
+        return "index";
+    }
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new UserDto());
@@ -43,9 +50,9 @@ public class MainController {
         AuthenticationResponse response = authenticationService.authenticate(request);
         if (response != null) {
             session.setAttribute("token", response.getToken());
-            //tokenHolder.set(response.getToken());
+            session.setAttribute("username", username);
             System.out.println("Login success");
-            return "redirect:/"; // redirect to the home page
+            return "redirect:/home"; // redirect to the home page
         } else {
             System.out.println("Login failed");
             return "login";
@@ -102,4 +109,11 @@ public class MainController {
     public String PropertyDetail() {
         return "property-detail";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }
