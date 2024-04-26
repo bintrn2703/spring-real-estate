@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.tdtu.springrealestate.models.Property;
 import vn.edu.tdtu.springrealestate.models.User;
 import vn.edu.tdtu.springrealestate.services.*;
@@ -36,7 +38,12 @@ public class PropertyController {
         model.addAttribute("properties", properties);
         return "property-list";
     }
-
+    @GetMapping("/property-search")
+    public String searchProperties(@RequestParam("type") String type, @RequestParam("location") String location, Model model) {
+        List<Property> properties = (List<Property>) propertyService.searchProperties(type,location);
+        model.addAttribute("properties", properties);
+        return "search-keywords";
+    }
     /*@GetMapping("/property-list/{id}")
     public String getPropertyDetail(@PathVariable(value="id") Long id, Model model) {
         Property property = propertyService.findById(id);
@@ -53,4 +60,6 @@ public class PropertyController {
         }*/
         return "create-property";
     }
+
+
 }
