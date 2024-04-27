@@ -60,6 +60,14 @@ public class PropertyController {
         }*/
         return "create-property";
     }
+    @GetMapping("/saved-categories")
+    public String savedCategories(Model model) {
+        return "saved-categories";
+    }
+    @GetMapping("/payment")
+    public String payment(Model model) {
+        return "payment";
+    }
 
 
 }
