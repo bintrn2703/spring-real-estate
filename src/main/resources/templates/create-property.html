@@ -30,10 +30,10 @@
     <link th:href="@{css/style.css}" rel="stylesheet">
 
     <style>
-        html, body {
+        /*html, body {
             min-height: 100%;
-        }
-        body, div, form, input, select, textarea, p {
+        }*/
+        /*body, div,*/ form, input, select, textarea, p {
             padding: 0;
             margin: 0;
             outline: none;
@@ -57,11 +57,11 @@
             padding: 20px;
         }
         form {
-            width: 100%;
+            width: 70%;
             padding: 20px;
             border-radius: 6px;
             background: #fff;
-            box-shadow: 0 0 30px 0 #00B98E;
+            box-shadow: 0 0 30px 0 #808080;
         }
         .banner {
             position: relative;
@@ -216,7 +216,7 @@
 
 
         <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent">
+<!--        <div class="container-fluid nav-bar bg-transparent">-->
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a th:href="@{'/'}" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
@@ -248,10 +248,14 @@
                         </div>-->
                         <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
-                    <a th:href="@{'/login'}" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                    <div th:if="${session != null}">
+                        <span th:text="${session.username}"></span>
+                        <a th:href="@{'/logout'}" class="btn btn-primary px-3 d-none d-lg-flex">Logout</a>
+                    </div>
+
                 </div>
             </nav>
-        </div>
+<!--        </div>-->
         <!-- Navbar End -->
 
 
@@ -295,42 +299,6 @@
                     <p>Birth Date</p>
                     <input type="date" name="bdate" required/>
                     <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div class="question">
-                    <p>Driving Licence</p>
-                    <div class="question-answer">
-                        <input type="radio" value="none" id="radio_1" name="driving"/>
-                        <label for="radio_1" class="radio"><span>Yes</span></label>
-                        <input type="radio" value="none" id="radio_2" name="driving" />
-                        <label for="radio_2" class="radio"><span>No</span></label>
-                    </div>
-                </div>
-                <div class="question">
-                    <p>Do you study?</p>
-                    <div class="question-answer">
-                        <input type="radio" value="none" id="radio_3" name="study"/>
-                        <label for="radio_3" class="radio"><span>Yes</span></label>
-                        <input type="radio" value="none" id="radio_4" name="study" />
-                        <label for="radio_4" class="radio"><span>No</span></label>
-                    </div>
-                </div>
-                <div class="question">
-                    <p>Martial Status</p>
-                    <div class="question-answer">
-                        <input type="radio" value="none" id="single" name="status"/>
-                        <label for="single" class="radio"><span>Single</span></label>
-                        <input type="radio" value="none" id="married" name="status" />
-                        <label for="married" class="radio"><span>Married</span></label>
-                    </div>
-                </div>
-                <div class="question">
-                    <p>Do you smoke?</p>
-                    <div class="question-answer">
-                        <input type="radio" value="none" id="radio_5" name="smoke"/>
-                        <label for="radio_5" class="radio"><span>Yes</span></label>
-                        <input type="radio" value="none" id="radio_6" name="smoke" />
-                        <label for="radio_6" class="radio"><span>No</span></label>
-                    </div>
                 </div>
                 <div class="question">
                     <p>Do you drink?</p>
@@ -394,7 +362,7 @@
                         <input type="radio" value="none" id="radio_12" name="college" />
                         <label for="radio_12" class="radio"><span>No</span></label>
                     </div>
-                </div>employerte
+                </div>
                 <div class="item">
                     <p>Name of Employer</p>
                     <div class="name-item">
@@ -411,7 +379,7 @@
                     <input type="text" name="name"/>
                 </div>
                 <div class="btn-block">
-                    <button type="submit" href="/">Submit</button>
+                    <button type="submit" href="#">Submit</button>
                 </div>
             </form>
         </div>
