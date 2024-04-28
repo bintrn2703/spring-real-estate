@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/", "/about","/contact","/property-list","/property-search/**","/**","/saved-categories","/payment").permitAll()
+                        .requestMatchers("/login/**", "/register/**", "/test/login", "/test/register","/", "/about","/contact","/property-list/","/property-search/**","/**","/saved-categories","/payment").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()
                         .anyRequest().authenticated()
                 ).userDetailsService(userService)

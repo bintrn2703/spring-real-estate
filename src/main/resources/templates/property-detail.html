@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" th:href="@{img/favicon.ico}" rel="icon">
+    <link href="img/favicon.ico" th:href="@{/img/favicon.ico}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,14 +21,177 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link th:href="@{lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <style>
+        body {
+            overflow-x: hidden; }
+
+        img {
+            max-width: 100%; }
+
+        .preview {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column; }
+        @media screen and (max-width: 996px) {
+            .preview {
+                margin-bottom: 20px; } }
+
+        .preview-pic {
+            -webkit-box-flex: 1;
+            -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1; }
+
+        .preview-thumbnail.nav-tabs {
+            border: none;
+            margin-top: 15px; }
+        .preview-thumbnail.nav-tabs li {
+            width: 18%;
+            margin-right: 2.5%; }
+        .preview-thumbnail.nav-tabs li img {
+            max-width: 100%;
+            display: block; }
+        .preview-thumbnail.nav-tabs li a {
+            padding: 0;
+            margin: 0; }
+        .preview-thumbnail.nav-tabs li:last-of-type {
+            margin-right: 0; }
+
+        .tab-content {
+            overflow: hidden; }
+        .tab-content img {
+            width: 100%;
+            -webkit-animation-name: opacity;
+            animation-name: opacity;
+            -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+        .card {
+            margin-top: 50px;
+            background: #FFFFFF;
+            padding: 3em;
+            line-height: 1.5em; }
+
+        @media screen and (min-width: 997px) {
+            .wrapper {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex; } }
+
+        .details {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column; }
+
+        .colors {
+            -webkit-box-flex: 1;
+            -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1; }
+
+        .product-title, .price, .sizes, .colors {
+            text-transform: UPPERCASE;
+            font-weight: bold; }
+
+        .checked, .price span {
+            color: #ff9f1a; }
+
+        .product-title, .rating, .product-description, .price, .vote, .sizes {
+            margin-bottom: 15px; }
+
+        .product-title {
+            margin-top: 0; }
+
+        .size {
+            margin-right: 10px; }
+        .size:first-of-type {
+            margin-left: 40px; }
+
+        .color {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            height: 2em;
+            width: 2em;
+            border-radius: 2px; }
+        .color:first-of-type {
+            margin-left: 20px; }
+
+        .add-to-cart, .like {
+            background: #ff9f1a;
+            padding: 1.2em 1.5em;
+            border: none;
+            text-transform: UPPERCASE;
+            font-weight: bold;
+            color: #fff;
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease; }
+        .add-to-cart:hover, .like:hover {
+            background: #b36800;
+            color: #fff; }
+
+        .not-available {
+            text-align: center;
+            line-height: 2em; }
+        .not-available:before {
+            font-family: fontawesome;
+            content: "\f00d";
+            color: #fff; }
+
+        .orange {
+            background: #ff9f1a; }
+
+        .green {
+            background: #85ad00; }
+
+        .blue {
+            background: #0076ad; }
+
+        .tooltip-inner {
+            padding: 1.3em; }
+
+        @-webkit-keyframes opacity {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(3);
+                transform: scale(3); }
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1); } }
+
+        @keyframes opacity {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(3);
+                transform: scale(3); }
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1); } }
+    </style>
 </head>
 <body>
     <div class="container-xxl bg-white p-0">
@@ -46,7 +209,7 @@
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a th:href="@{'/'}" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="img/favicon.png" alt="Icon" style="width: 30px; height: 30px;">
+                        <img class="img-fluid" th:src="@{'/img/favicon.png'}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
                     <h1 class="m-0 text-primary">Spring Real Estate</h1>
                 </a>
@@ -73,28 +236,65 @@
         </div>
         <!-- Navbar End -->
 
-        <!-- Header Start -->
-        <!--        <div class="container-fluid header bg-white p-0">-->
-        <!--            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">-->
-        <!--                <div class="col-md-6 p-5 mt-lg-5">-->
-        <!--                    <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-primary">Perfect Home</span> To Live With Your Family</h1>-->
-        <!--                    <p class="animated fadeIn mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet-->
-        <!--                        sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>-->
-        <!--                    <a th:href="@{'/property-list'}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>-->
-        <!--                </div>-->
-        <!--                <div class="col-md-6 animated fadeIn">-->
-        <!--                    <div class="owl-carousel header-carousel">-->
-        <!--                        <div class="owl-carousel-item">-->
-        <!--                            <img class="img-fluid" src="img/carousel-1.jpg" alt="">-->
-        <!--                        </div>-->
-        <!--                        <div class="owl-carousel-item">-->
-        <!--                            <img class="img-fluid" src="img/carousel-2.jpg" alt="">-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!-- Header End -->
+        <!-- Details Start -->
+        <div class="container">
+            <div class="card">
+                <div class="container-fliud">
+                    <div class="wrapper row">
+                        <div class="preview col-md-6">
+
+                            <div class="preview-pic tab-content">
+                                <div class="tab-pane active" id="pic-1"><img th:src="@{/img/property-1.jpg}" /></div>
+                                <div class="tab-pane" id="pic-2"><img th:src="@{/img/property-2.jpg}" /></div>
+                                <div class="tab-pane" id="pic-3"><img th:src="@{/img/property-3.jpg}" /></div>
+                                <div class="tab-pane" id="pic-4"><img th:src="@{/img/property-4.jpg}" /></div>
+                                <div class="tab-pane" id="pic-5"><img th:src="@{/img/property-5.jpg}" /></div>
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                <li class="active"><a data-target="#pic-1" data-toggle="tab"><img th:src="@{/img/property-1.jpg}" /></a></li>
+                                <li><a data-target="#pic-2" data-toggle="tab"><img th:src="@{/img/property-2.jpg}" /></a></li>
+                                <li><a data-target="#pic-3" data-toggle="tab"><img th:src="@{/img/property-3.jpg}" /></a></li>
+                                <li><a data-target="#pic-4" data-toggle="tab"><img th:src="@{/img/property-4.jpg}" /></a></li>
+                                <li><a data-target="#pic-5" data-toggle="tab"><img th:src="@{/img/property-5.jpg}" /></a></li>
+                            </ul>
+
+                        </div>
+                        <div class="details col-md-6">
+                            <h3 class="product-title">men's shoes fashion</h3>
+                            <div class="rating">
+                                <div class="stars">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </div>
+                                <span class="review-no">41 reviews</span>
+                            </div>
+                            <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
+                            <h4 class="price">current price: <span>$180</span></h4>
+                            <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                            <h5 class="sizes">sizes:
+                                <span class="size" data-toggle="tooltip" title="small">s</span>
+                                <span class="size" data-toggle="tooltip" title="medium">m</span>
+                                <span class="size" data-toggle="tooltip" title="large">l</span>
+                                <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+                            </h5>
+                            <h5 class="colors">colors:
+                                <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                                <span class="color green"></span>
+                                <span class="color blue"></span>
+                            </h5>
+                            <div class="action">
+                                <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                                <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Details End -->
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -124,22 +324,22 @@
                         <h5 class="text-white mb-4">Photo Gallery</h5>
                         <div class="row g-2 pt-2">
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-1.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-1.jpg}" alt="">
                             </div>
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-2.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-2.jpg}" alt="">
                             </div>
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-3.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-3.jpg}" alt="">
                             </div>
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-4.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-4.jpg}" alt="">
                             </div>
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-5.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-5.jpg}" alt="">
                             </div>
                             <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-6.jpg" alt="">
+                                <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-6.jpg}" alt="">
                             </div>
                         </div>
                     </div>
@@ -154,22 +354,9 @@
                 </div>
             </div>
             <div class="container">
-                <div class="copyright">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="footer-menu">
-                                <a href="">Home</a>
-                                <a href="">Cookies</a>
-                                <a href="">Help</a>
-                                <a href="">FQAs</a>
-                            </div>
-                        </div>
+                <div class="copyright d-flex justify-content-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0 d-flex justify-content-center">
+                        &copy; <a class="border-bottom" th:href="@{'/'}">Spring Real Estate</a>, All Right Reserved.
                     </div>
                 </div>
             </div>

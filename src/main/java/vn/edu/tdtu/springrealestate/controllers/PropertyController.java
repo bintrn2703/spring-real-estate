@@ -20,7 +20,12 @@ public class PropertyController {
     PropertyService propertyService;
     @Autowired
     UserService userService;
-
+    @GetMapping("/property-list")
+    public String getProperty(Model model) {
+        List<Property> properties = (List<Property>) propertyService.getAllProperty();
+        model.addAttribute("properties", properties);
+        return "property-list";
+    }
     /*@GetMapping("/property-list")
     public String getProperty(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
@@ -31,12 +36,11 @@ public class PropertyController {
         }
         return "property-list";
     }*/
-
-    @GetMapping("/property-list")
-    public String getProperty(Model model) {
-        List<Property> properties = (List<Property>) propertyService.getAllProperty();
-        model.addAttribute("properties", properties);
-        return "property-list";
+    @GetMapping("/property-list/{id}")
+    public String getPropertyDetail(@PathVariable(value="id") Long id, Model model) {
+        Property property = propertyService.findById(id);
+        model.addAttribute("propertyDetail", property);
+        return "property-detail";
     }
     @GetMapping("/property-search")
     public String searchProperties(@RequestParam("type") String type, @RequestParam("location") String location, Model model) {
@@ -44,15 +48,10 @@ public class PropertyController {
         model.addAttribute("properties", properties);
         return "search-keywords";
     }
-    /*@GetMapping("/property-list/{id}")
-    public String getPropertyDetail(@PathVariable(value="id") Long id, Model model) {
-        Property property = propertyService.findById(id);
-        model.addAttribute("propertyDetail", property);
+    @GetMapping("/property-detail")
+    public String getPropertyDetail() {
         return "property-detail";
-    }*/
-
-
-
+    }
     @GetMapping("/create-property")
     public String createProperty(Model model) {
         /*if(session.getAttribute("token") == null) {
@@ -68,6 +67,5 @@ public class PropertyController {
     public String payment(Model model) {
         return "payment";
     }
-
 
 }
