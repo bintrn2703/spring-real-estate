@@ -105,6 +105,19 @@
             -ms-flex-direction: column;
             flex-direction: column; }
 
+        .action {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            gap: 10px;
+        }
+
+        .badge-secondary{
+            background-color: #6c757d;
+            margin-left: 10px;
+            font-size: .45em;
+        }
+
         .colors {
             -webkit-box-flex: 1;
             -webkit-flex-grow: 1;
@@ -139,7 +152,7 @@
         .color:first-of-type {
             margin-left: 20px; }
 
-        .add-to-cart, .like {
+        .add-to-cart {
             background: #00B98E;
             padding: 1.2em 1.5em;
             border: none;
@@ -147,17 +160,28 @@
             font-weight: bold;
             color: #fff;
             -webkit-transition: background .3s ease;
-            transition: background .3s ease; }
-        .add-to-cart:hover, .like:hover {
+            transition: background .3s ease;
+        }
+        .add-to-cart:hover{
             background: #006d53;
             color: #fff; }
-
         .not-available {
             text-align: center;
             line-height: 2em; }
         .not-available:before {
             font-family: fontawesome;
             content: "\f00d";
+            color: #fff; }
+
+        .contact-agent {
+            padding: 1.2em 1.5em;
+            text-transform: UPPERCASE;
+            font-weight: bold;
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease;
+        }
+        .contact-agent:hover, .like:hover  {
+            background: #006d53;
             color: #fff; }
 
         .orange {
@@ -260,40 +284,58 @@
 
                         </div>
                         <div class="details col-md-6">
-                            <h3 class="product-title">Property Title</h3>
-                            <!--<div class="rating">
-                                <div class="stars">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                <span class="review-no">41 reviews</span>
-                            </div>-->
-                            <p class="product-description">3743 Hill Stone, San Jose</p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="product-title" th:text="${propertyDetail.getTitle()}"><span class="badge badge-secondary" th:text="${propertyDetail.getPurpose()}"></span></h3>
+                                <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                            </div>
+                            <p class="product-description" th:text="${propertyDetail.getAddress() + ', ' + propertyDetail.getLocation()}"></p>
                             <div class="d-flex" style="margin: 15px;">
                                 <span class="flex-fill text-center py-2">
                                     <i class="fa fa-ruler-combined text-primary me-2"></i>
-                                    <span>60.0</span>
+                                    <span th:text="${propertyDetail.getArea()}"></span>
                                 </span>
                                 <span class="flex-fill text-center py-2">
                                     <i class="fa fa-bed text-primary me-2"></i>
-                                    <span>1</span>
+                                    <span th:text="${propertyDetail.getBedroom()}"></span>
                                 </span>
                                 <span class="flex-fill text-center py-2">
                                     <i class="fa fa-bath text-primary me-2"></i>
-                                    <span>1</span>
+                                    <span th:text="${propertyDetail.getBathroom()}"></span>
                                 </span>
                             </div>
-
-                            <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
-
-                            <h4 class="price">current price: <span>$180</span></h4>
-                            <p class="vote">Estimated payment <strong>$6,618/mo</strong></p>
+                            <p>Status: <strong th:text="${propertyDetail.getStatus()}"></strong></p>
+                            <h4 class="price">current price: <span th:text="${'$' + propertyDetail.getPrice()}"></span></h4>
+                            <p class="vote">Estimated payment <strong th:text="${'$' + propertyDetail.getPrice()/12 + '/mo'}"></strong></p>
                             <div class="action">
                                 <button class="add-to-cart btn btn-default" type="button">Request a tour</button>
-                                <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                                <button class="contact-agent btn btn-outline-primary">Contact Agent</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="mt-5">What's special</h4>
+                        <p class="mt-3" th:text="${propertyDetail.getDescription()}"></p>
+                        <div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
+                            <iframe class="position-relative rounded w-100 h-100"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+                                    frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false"
+                                    tabindex="0">
+                            </iframe>
+                        </div>
+                        <hr>
+                        <div class="row-cols-4 d-flex">
+                            <div class="col-md-2">
+                                <p class="text-primary">Upload date</p>
+                                <p>2021-10-10</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="text-primary">Agent</p>
+                                <p th:text="${propertyDetail.getUserId().getName()}"></p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="text-primary">Property ID</p>
+                                <p th:text="${propertyDetail.getId()}"></p>
                             </div>
                         </div>
                     </div>
