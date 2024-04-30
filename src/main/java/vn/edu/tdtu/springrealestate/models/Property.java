@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.BitSet;
+
 @Entity
 @Table(name = "property")
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class Property {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
     private String title;
     private String type;
     private String purpose;
@@ -29,10 +31,11 @@ public class Property {
     private Integer bathroom;
     private String status;
     private String thumbnailImage;
+    @Column(name = "is_saved")
+    private boolean isSaved = false;
 
-    public Property(Long id, User userId, String title, String type, String purpose, String description, String address, String location, Double price, Double area, Integer bedroom, Integer bathroom, String status) {
-        this.id = id;
-        this.userId = userId;
+    public Property(User user, String title, String type, String purpose, String description, String address, String location, Double price, Double area, Integer bedroom, Integer bathroom, String status, String thumbnailImage, boolean isSaved) {
+        this.user = user;
         this.title = title;
         this.type = type;
         this.purpose = purpose;
@@ -44,5 +47,7 @@ public class Property {
         this.bedroom = bedroom;
         this.bathroom = bathroom;
         this.status = status;
+        this.thumbnailImage = thumbnailImage;
+        this.isSaved = isSaved;
     }
 }

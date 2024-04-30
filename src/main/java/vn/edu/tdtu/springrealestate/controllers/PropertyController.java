@@ -21,7 +21,8 @@ public class PropertyController {
     @Autowired
     UserService userService;
     @GetMapping("/property-list")
-    public String getProperty(Model model) {
+    public String getProperty(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
         List<Property> properties = (List<Property>) propertyService.getAllProperty();
         model.addAttribute("properties", properties);
         return "property-list";

@@ -61,13 +61,16 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="property-list.html" class="dropdown-item">Property List</a>
+                            <a th:href="@{/property-list}" class="dropdown-item">Property List</a>
                             <a href="property-type.html" class="dropdown-item">Property Type</a>
                             <a href="property-agent.html" class="dropdown-item">Property Agent</a>
                         </div>
                     </div>
                 </div>
-                <a th:href="@{'/login'}" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                <div th:if="${session != null}">
+                    <span th:text="${session.username}"></span>
+                    <a th:href="@{'/logout'}" class="btn btn-primary px-3 d-none d-lg-flex">Logout</a>
+                </div>
             </div>
         </nav>
     </div>
@@ -111,8 +114,52 @@
     <!-- Search End -->
     <div class="container mt-5">
         <h2>Saved Categories:</h2>
+
+        <div display="flex">
+            <div class="container-fluid  margin">
+                <a th:href="@{'/yourHome'}" href="https://www.behance.net/sakiran" class="themeBtn ripple-effect">Your Home</a>
+            </div>
+            <div class="container-fluid  margin">
+                <a th:href="@{'/otherHome'}" href="https://www.behance.net/sakiran" class="themeBtn ripple-effect">Other Home</a>
+            </div>
+        </div>
         <div class="row g-4">
-            <div th:each="property : ${properties}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div th:if="${other}" th:each="property : ${properties}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="property-item rounded overflow-hidden">
+                    <div class="position-relative overflow-hidden">
+                        <a th:href="@{'/property/' + ${property.getId()}}">
+                            <img class="img-fluid" th:src="@{${property.getThumbnailImage()}}" alt="">
+                        </a>
+                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3" th:text="${property.getStatus()}"></div>
+                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3" th:text="${property.getType()}"></div>
+                    </div>
+
+                    <div class="p-4 pb-0">
+                        <h5 class="text-primary mb-3" th:text="${property.getPrice()}"></h5>
+                        <a th:href="@{'/property/' + ${property.getId()}}" class="d-block h5 mb-2" th:text="${property.getTitle()}"></a>
+                        <p>
+                            <i class="fa fa-map-marker-alt text-primary me-2"></i>
+                            <span th:text="${property.getLocation()}"></span>
+                        </p>
+                    </div>
+                    <div class="d-flex border-top">
+                        <small class="flex-fill text-center border-end py-2">
+                            <i class="fa fa-ruler-combined text-primary me-2"></i>
+                            <span th:text="${property.getArea()}"></span>
+                        </small>
+                        <small class="flex-fill text-center border-end py-2">
+                            <i class="fa fa-bed text-primary me-2"></i>
+                            <span th:text="${property.getBedroom()}"></span>
+                        </small>
+                        <small class="flex-fill text-center py-2">
+                            <i class="fa fa-bath text-primary me-2"></i>
+                            <span th:text="${property.getBathroom()}"></span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div th:unless="${other}" th:each="property : ${otherProperties}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="property-item rounded overflow-hidden">
                     <div class="position-relative overflow-hidden">
                         <a th:href="@{'/property/' + ${property.getId()}}">
@@ -147,6 +194,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">

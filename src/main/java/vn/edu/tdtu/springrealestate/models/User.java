@@ -27,12 +27,16 @@ public class User implements UserDetails {
     private String name;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<Property> properties;
 
-    public User(String email, String password, String username, Role role) {
+    public User(String email, String password, String username, String name, Role role, List<Property> properties) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.name = name;
         this.role = role;
+        this.properties = properties;
     }
 
     @Override

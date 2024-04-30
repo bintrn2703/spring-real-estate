@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.edu.tdtu.springrealestate.models.Property;
+import vn.edu.tdtu.springrealestate.models.User;
 import vn.edu.tdtu.springrealestate.repository.PropertyRepository;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class PropertyService {
     public Property findById(Long id) {
         return propertyRepository.findById(id).orElse(null);
     }
-    public Iterable<Property> getPropertiesByUsername(String username) {
-        return propertyRepository.findByUserIdEmail(username);
-    }
+//    public Iterable<Property> getPropertiesByUsername(String username) {
+//        return propertyRepository.findByUserIdEmail(username);
+//    }
     public Property save(Property property) {
         return propertyRepository.save(property);
     }
@@ -38,4 +39,9 @@ public class PropertyService {
             return propertyRepository.findByTypeAndLocation(type, location);
         }
     }
+
+    public Iterable<Property> getPropertiesByUsername(User user) {
+        return propertyRepository.findByUserUsername(user.getUsername());
+    }
+
 }

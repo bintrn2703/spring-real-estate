@@ -5,16 +5,18 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import vn.edu.tdtu.springrealestate.models.AuthenticationResponse;
-import vn.edu.tdtu.springrealestate.models.Role;
-import vn.edu.tdtu.springrealestate.models.User;
-import vn.edu.tdtu.springrealestate.models.UserDto;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import vn.edu.tdtu.springrealestate.models.*;
+import vn.edu.tdtu.springrealestate.repository.CartRepository;
+import vn.edu.tdtu.springrealestate.repository.PropertyRepository;
 import vn.edu.tdtu.springrealestate.repository.UserRepository;
 import vn.edu.tdtu.springrealestate.services.AuthenticationService;
+import vn.edu.tdtu.springrealestate.services.PropertyService;
+import vn.edu.tdtu.springrealestate.services.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -22,6 +24,12 @@ public class MainController {
     private UserRepository userRepository;
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private PropertyService propertyService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CartRepository cartRepository;
     public static final ThreadLocal<String> tokenHolder = new ThreadLocal<>();
     @GetMapping("/")
     public String index(HttpSession session) {
@@ -32,7 +40,10 @@ public class MainController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(HttpSession session) {
+        if (session.getAttribute("token") == null) {
+            return "redirect:/";
+        }
         return "index";
     }
 
@@ -52,7 +63,8 @@ public class MainController {
             session.setAttribute("token", response.getToken());
             session.setAttribute("username", username);
             System.out.println("Login success");
-            return "redirect:/home"; // redirect to the home page
+            //return "redirect:/home"; // redirect to the home page
+            return "redirect:/yourHome";
         } else {
             System.out.println("Login failed");
             return "login";
@@ -109,5 +121,55 @@ public class MainController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("/yourHome")
+    public String yourHome(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        //String username = userService.getUsernameFromToken();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            List<Property> properties = (List<Property>) propertyService.getPropertiesByUsername(user);
+            model.addAttribute("properties", properties);
+            model.addAttribute("other", true);
+        } else {
+            return "saved-categories";
+        }
+        return "saved-categories";
+    }
+
+    @GetMapping("/otherHome")
+    public String otherHome(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        //String username = userService.getUsernameFromToken();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            List<Property> properties = (List<Property>) propertyService.getPropertiesByUsername(user);
+            model.addAttribute("properties", properties);
+
+            List<Property> otherProperties = cartRepository.findPropertiesByUser(user);
+            model.addAttribute("otherProperties", otherProperties);
+            model.addAttribute("other", false);
+
+        } else {
+            return "saved-categories";
+        }
+        return "saved-categories";
+    }
+
+    @GetMapping("/property-list/{id}/saveHome")
+    public String saveHome(@PathVariable(value = "id") Long id, HttpSession session) {
+        //String username = (String) session.getAttribute("username");
+
+
+        Property property = propertyService.findById(id);
+        Cart cart = new Cart();
+        cart.setProperty(property);
+        cart.setUser(userRepository.findByUsername("phat").orElseThrow());
+        cartRepository.save(cart);
+        return "redirect:/property-list/" + id;
+    }
+
 
 }

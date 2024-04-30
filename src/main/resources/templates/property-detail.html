@@ -254,7 +254,10 @@
                         </div>
                         <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
-                    <a th:href="@{/login}" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                    <div th:if="${session != null}">
+                        <span th:text="${session.username}"></span>
+                        <a th:href="@{'/logout'}" class="btn btn-primary px-3 d-none d-lg-flex">Logout</a>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -286,7 +289,7 @@
                         <div class="details col-md-6">
                             <div class="d-flex justify-content-between">
                                 <h3 class="product-title" th:text="${propertyDetail.getTitle()}"><span class="badge badge-secondary" th:text="${propertyDetail.getPurpose()}"></span></h3>
-                                <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                                <a th:href="@{'/property-list/{id}/saveHome' (id=${propertyDetail.id})}" class="like btn btn-default" type="button"><span class="fa fa-heart"></span></a>
                             </div>
                             <p class="product-description" th:text="${propertyDetail.getAddress() + ', ' + propertyDetail.getLocation()}"></p>
                             <div class="d-flex" style="margin: 15px;">
@@ -331,7 +334,7 @@
                             </div>
                             <div class="col-md-2">
                                 <p class="text-primary">Agent</p>
-                                <p th:text="${propertyDetail.getUserId().getName()}"></p>
+                                <p th:text="${propertyDetail.getUser().getName()}"></p>
                             </div>
                             <div class="col-md-2">
                                 <p class="text-primary">Property ID</p>
