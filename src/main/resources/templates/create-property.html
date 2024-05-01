@@ -89,7 +89,7 @@
             border-radius: 3px;
         }
         input {
-            width: calc(100% - 10px);
+            width: 100%;
             padding: 5px;
         }
         select {
@@ -98,7 +98,7 @@
             background: transparent;
         }
         textarea {
-            width: calc(100% - 12px);
+            width: 100%;
             padding: 5px;
         }
         .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
@@ -210,7 +210,6 @@
         @media (min-width: 568px) {
             .name-item, .city-item {
                 display: flex;
-                flex-wrap: wrap;
                 justify-content: space-between;
             }
             .name-item input, .city-item input {
@@ -279,15 +278,15 @@
 
         <!-- Create Property Start -->
         <div class="testbox">
-            <form action="/">
+            <form method="post" th:action="@{/create-property}" th:object="${property}" enctype="multipart/form-data">
                 <div class="banner">
                     <h1>Create Your Property</h1>
                 </div>
                 <div class="item">
                     <p>Address</p>
-                    <input type="text" name="address" placeholder="Street address"/>
+                    <input type="text" name="address" placeholder="Street address" th:field="*{address}" required/>
                     <div class="city-item">
-                        <input type="text" name="location" placeholder="City" />
+                        <input type="text" name="location" placeholder="City" th:field="*{location}" required/>
                         <input type="text" name="postal" placeholder="ZIP" />
                         <select>
                             <option value="">Country</option>
@@ -299,11 +298,17 @@
                         </select>
                     </div>
                 </div>
+                <div class="item" style="width: 30%">
+                    <h4>Price</h4>
+                    <p>Set your property value</p>
+                    <input type="text" name="price" placeholder="$ 0.00" th:field="*{price}"/>
+                </div>
+                <p>What's your property purpose?</p>
                 <div class="d-flex justify-content-center">
 <!--                    <div class="row">-->
 <!--                        <div class="col-md-4 col-lg-4 col-sm-4">-->
                             <label style="width: 372px">
-                                <input type="radio" name="purpose" selected checked class="card-input-element" />
+                                <input type="radio" name="purpose" selected checked class="card-input-element" value="For Sale" th:field="*{type}"/>
                                 <div class="card card-default card-input">
                                     <div class="card-body">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16" style="margin-bottom: .5rem">
@@ -319,7 +324,7 @@
 <!--                        </div>-->
 <!--                        <div class="col-md-4 col-lg-4 col-sm-4">-->
                             <label style="width: 372px">
-                                <input type="radio" name="purpose" class="card-input-element" />
+                                <input type="radio" name="purpose" class="card-input-element" value="For Rent" th:field="*{type}"/>
                                 <div class="card card-default card-input">
                                     <div class="card-body">
                                         <i class="bi bi-calendar-week" style="font-size: 48px"></i>
@@ -330,60 +335,56 @@
 <!--                        </div>-->
 <!--                    </div>-->
                 </div>
-                <div class="item" style="width: 30%">
-                    <p>Price</p>
-                    <input type="text" name="price" placeholder="$ 0.00"/>
-                </div>
                 <div class="mb-3">
                     <h4>Upload Images</h4>
                     <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple>
+                    <input class="form-control" type="file" id="formFileMultiple" name="images" multiple>
                 </div>
                 <h4>Property Details</h4>
                 <div class = "item">
                     <p>Property Type</p>
-                    <select>
+                    <select th:field="*{type}">
                         <option value="none" selected disabled hidden>Select an Option</option>
-                        <option value="1">Apartment</option>
-                        <option value="2">House</option>
-                        <option value="3">Land</option>
-                        <option value="4">Commercial</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="House">House</option>
+                        <option value="Land">Land</option>
+                        <option value="Commercial">Commercial</option>
                     </select>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex justify-content-between">
                     <div class="item">
                         <p>Bedrooms</p>
-                        <input type="number" name="bedrooms" />
+                        <input type="number" name="bedrooms" th:field="*{bedroom}"/>
                     </div>
                     <div class="item">
                         <p>Bathrooms</p>
-                        <input type="number" name="bathrooms" />
+                        <input type="number" name="bathrooms" th:field="*{bathroom}"/>
                     </div>
                     <div class="item">
                         <p>Area</p>
-                        <input type="number" name="area" placeholder="square feet"/>
+                        <input type="number" name="area" placeholder="square feet" th:field="*{area}"/>
                     </div>
                 </div>
                 <div class="item" style="width: 30%">
                     <p>Year built</p>
-                    <input type="text" name="year" />
+                    <input type="text" name="year" th:field="*{year}"/>
                 </div>
                 <div class="item">
                     <p>Please describe your property</p>
-                    <textarea rows="10"></textarea>
+                    <textarea rows="10" th:field="*{description}"></textarea>
                 </div>
                 <h4>Contact Details</h4>
                 <p>Potential buyers will contact you through the email address you use to register on Spring Real Estate. You must also add your phone number to the listing here.</p>
                 <div class="item" style="width: 30%">
                     <p>Phone</p>
-                    <input type="text" name="name"/>
+                    <input type="text" name="contactPhone" th:field="*{contactPhone}"/>
                 </div>
                 <div class="zsg-form-field">
                     <input class="form-check-input" type="checkbox" name="terms" id="terms" style="margin-right: 3px">
                     <label for="terms" class="form-check-label"> I agree to, acknowledge and understand the following: (i) I am (or I have authority to act on behalf of) the owner of this home; (ii) I will not provide incorrect information or state a <a href="https://www.zillow.com/z/info/good-neighbor-policy/" target="_blank" tabindex="-1">discriminatory preference</a>; (iii) I will be posting my property 'for sale by owner' on Spring Real Estate.com and other affiliated websites and that I will solely be responsible for maintaining and updating the posting and responding to and negotiating potential offers to purchase the property; (iv) Spring Real Estate, Inc. ("Spring Real Estate") is a licensed real estate brokerage, that I am not entering into any agency or brokerage relationship with Spring Real Estate as part of this posting and that Spring Real Estate is not providing me with any real estate brokerage services as part of this posting; and (v) I will comply with the <a href="https://www.zillowgroup.com/terms-of-use/" target="_blank" tabindex="-1">Spring Real Estate Terms of Use</a> and <a href="https://www.zillow.com/z/corp/quality/" target="_blank" tabindex="-1">Listing Quality Policy</a>. <br><br> I also agree that by clicking below, Spring Real Estate Group and its affiliates, and <span class="zsg-tooltip-launch zsg-tooltip-launch_keyword" data-target-id="real-estate-professionals-tooltip">real estate professionals</span><div class="zsg-tooltip" id="real-estate-professionals-tooltip"><p>"Real estate professionals" includes the real estate agents and brokers, mortgage lenders and loan officers, property managers and other professionals you interact with through Spring Real Estate. Spring Real Estate Premier Agent is an advertising program that helps connect customers to local real estate professionals. Spring Real Estate Premier Agent partners are paid advertisers and are not affiliated with Spring Real Estate, Inc. brokerage or any of its affiliates.</p></div> may call or text me for marketing purposes, which may involve use of automated means and prerecorded/artificial voices. Consent is not a condition of buying any property, goods or services. Message/data rates may apply. </label>
                 </div>
                 <div class="btn-block">
-                    <button id="submit-btn" type="submit" href="#">Submit</button>
+                    <button id="submit-btn" type="submit">Submit</button>
                 </div>
             </form>
         </div>

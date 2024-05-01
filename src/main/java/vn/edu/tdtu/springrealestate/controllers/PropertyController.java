@@ -1,5 +1,6 @@
 package vn.edu.tdtu.springrealestate.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import vn.edu.tdtu.springrealestate.models.Property;
 import vn.edu.tdtu.springrealestate.models.User;
 import vn.edu.tdtu.springrealestate.services.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -54,11 +57,40 @@ public class PropertyController {
         return "property-detail";
     }
     @GetMapping("/create-property")
-    public String createProperty(Model model) {
-        /*if(session.getAttribute("token") == null) {
+    public String createProperty(Model model, HttpSession session) {
+        if(session.getAttribute("token") == null) {
             return "redirect:/login";
-        }*/
+        }
+        Property property = new Property();
+        model.addAttribute("property", property);
         return "create-property";
+    }
+    @PostMapping("/create-property")
+    public String createProperty(HttpServletRequest request, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String formattedNow = now.format(formatter);
+        User user = (User) userService.loadUserByUsername(username);
+
+        Property property = new Property();
+        property.setUser(user);
+        property.setTitle(request.getParameter("title"));
+        property.setType(request.getParameter("type"));
+        property.setPurpose(request.getParameter("purpose"));
+        property.setDescription(request.getParameter("description"));
+        property.setAddress(request.getParameter("address"));
+        property.setLocation(request.getParameter("location"));
+        property.setPrice(Double.parseDouble(request.getParameter("price")));
+        property.setArea(Double.parseDouble(request.getParameter("area")));
+        property.setBedroom(Integer.parseInt(request.getParameter("bedroom")));
+        property.setBathroom(Integer.parseInt(request.getParameter("bathroom")));
+        property.setYear(Long.parseLong(request.getParameter("year")));
+        property.setUploadDate(formattedNow);
+        property.setContactPhone(request.getParameter("contactPhone"));
+        propertyService.save(property);
+
+        return "redirect:/yourHome";
     }
     @GetMapping("/saved-categories")
     public String savedCategories(Model model) {
