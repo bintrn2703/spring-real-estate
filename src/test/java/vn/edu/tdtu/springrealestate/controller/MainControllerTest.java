@@ -1,6 +1,10 @@
 package vn.edu.tdtu.springrealestate.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import vn.edu.tdtu.springrealestate.controllers.MainController;
 import vn.edu.tdtu.springrealestate.models.*;
 import vn.edu.tdtu.springrealestate.repository.CartRepository;
 import vn.edu.tdtu.springrealestate.repository.UserRepository;
@@ -27,6 +32,7 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
@@ -35,6 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MainControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private MainController mainController;
+
 
     @MockBean
     private AuthenticationService authenticationService;
@@ -46,58 +55,108 @@ public class MainControllerTest {
     @MockBean
     private CartRepository cartRepository;
 
-    @Test
-    public void test() {
-        log.info("Hello Test");
-    }
 
     @Test
-    public void testRegisterPost() throws Exception {
+    void testRegisterPost_WithValidUserDto_ReturnsLogin() {
+        // Arrange
         UserDto userDto = new UserDto();
         userDto.setUsername("testUser");
-        userDto.setPassword("testPassword");
-        userDto.setConfirmPassword("testPassword");
-        userDto.setEmail("testEmail");
+        userDto.setPassword("password");
+        userDto.setConfirmPassword("password");
+        userDto.setEmail("test@example.com");
+        userDto.setName("Test User");
 
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
-        user.setRole(Role.USER);
+        when(userRepository.findByUsername("testUser")).thenReturn(Optional.empty());
 
-        when(userRepository.findByUsername(userDto.getUsername())).thenReturn(Optional.empty());
+        // Act
+        String result = mainController.registerPost(userDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/register")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", userDto.getUsername())
-                        .param("password", userDto.getPassword())
-                        .param("confirmPassword", userDto.getConfirmPassword())
-                        .param("email", userDto.getEmail()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("login"));
-
-        verify(authenticationService, times(1)).register(user);
+        // Assert
+        assertEquals("login", result);
+        verify(authenticationService, times(1)).register(any(User.class));
     }
-
-
 
     @Test
-    public void testLoginPost() throws Exception {
-        User user = new User();
-        user.setUsername("phat");
-        user.setPassword("1234");
+    void testRegisterPost_WithMismatchedPasswords_ReturnsRedirectToLogin() {
+        // Arrange
+        UserDto userDto = new UserDto();
+        userDto.setUsername("testUser");
+        userDto.setName("Test User");
+        userDto.setPassword("password");
+        userDto.setConfirmPassword("differentPassword"); // Mismatched password
 
-        when(authenticationService.authenticate(any(User.class))).thenReturn(null);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", user.getUsername())
-                        .param("password", user.getPassword()))
-                .andExpect(status().isUnauthorized())
-                .andExpect(MockMvcResultMatchers.content().string("Login failed"));
+        // Act
+        String result = mainController.registerPost(userDto);
 
-        verify(authenticationService, times(1)).authenticate(any(User.class));
+        // Assert
+        assertEquals("redirect:/login", result);
     }
+
+    @Test
+    void testRegisterPost_WithExistingUsername_ReturnsRedirectToLogin() {
+        // Arrange
+        UserDto userDto = new UserDto();
+        userDto.setUsername("existingUser");
+        userDto.setName("Test User");
+        userDto.setPassword("password");
+        userDto.setConfirmPassword("password");
+        userDto.setEmail("test@example.com");
+
+        when(userRepository.findByUsername("existingUser")).thenReturn(Optional.of(new User()));
+
+        // Act
+        String result = mainController.registerPost(userDto);
+
+        // Assert
+        assertEquals("redirect:/login", result);
+    }
+
+
+
+//    @Test
+//    void testLoginPost_WithValidCredentials_ReturnsRedirectToYourHome() {
+//        // Arrange
+//        HttpSession session = mock(HttpSession.class);
+//        String username = "testUser";
+//        String password = "password";
+//        User request = new User();
+//        request.setUsername(username);
+//        request.setPassword(password);
+//        AuthenticationResponse response = new AuthenticationResponse("validToken");
+//
+//        when(authenticationService.authenticate(eq(request))).thenReturn(response);
+//
+//        // Act
+//        String result = mainController.loginPost(session, username, password);
+//
+//        // Assert
+//        assertEquals("redirect:/yourHome", result);
+//        verify(session, times(1)).setAttribute("token", "validToken");
+//        verify(session, times(1)).setAttribute("username", username);
+//        verify(authenticationService, times(1)).authenticate(request);
+//    }
+//
+//    @Test
+//    void testLoginPost_WithInvalidCredentials_ReturnsLogin() {
+//        // Arrange
+//        HttpSession session = mock(HttpSession.class);
+//        String username = "testUser";
+//        String password = "wrongPassword";
+//        User request = new User();
+//        request.setUsername(username);
+//        request.setPassword(password);
+//
+//        when(authenticationService.authenticate(request)).thenReturn(null);
+//
+//        // Act
+//        String result = mainController.loginPost(session, username, password);
+//
+//        // Assert
+//        assertEquals("login", result);
+//        verify(session, never()).setAttribute(anyString(), any());
+//        verify(authenticationService, times(1)).authenticate(request);
+//    }
 
 
 

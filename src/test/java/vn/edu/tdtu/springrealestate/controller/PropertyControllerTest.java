@@ -70,9 +70,23 @@ public class PropertyControllerTest {
 
     @Test
     public void testGetPropertyDetail() throws Exception {
-        // Tạo một đối tượng Property giả lập
+        // Tạo một đối tượng Property giả lập với tất cả các thuộc tính
         Property mockProperty = new Property();
+        User mockUser = new User();
+        mockUser.setName("Test User");
+        mockProperty.setUser(mockUser);
         mockProperty.setTitle("Test Title");
+        mockProperty.setType("Test Type");
+        mockProperty.setPurpose("Test Purpose");
+        mockProperty.setDescription("Test Description");
+        mockProperty.setAddress("Test Address");
+        mockProperty.setLocation("Test Location");
+        mockProperty.setPrice(1000.0);
+        mockProperty.setArea(100.0);
+        mockProperty.setBedroom(2);
+        mockProperty.setBathroom(1);
+        mockProperty.setYear(2022L);
+        mockProperty.setContactPhone("1234567890");
 
         // Mô phỏng hành vi của propertyService
         when(propertyService.findById(1L)).thenReturn(mockProperty);

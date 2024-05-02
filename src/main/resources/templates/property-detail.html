@@ -308,7 +308,7 @@
                             </div>
                             <p>Status: <strong th:text="${propertyDetail.getStatus()}"></strong></p>
                             <h4 class="price">current price: <span th:text="${'$' + propertyDetail.getPrice()}"></span></h4>
-                            <p class="vote">Estimated payment <strong th:text="${'$' + propertyDetail.getPrice()/12 + '/mo'}"></strong></p>
+                            <p class="vote">Estimated payment <strong th:text="${propertyDetail.price != null ? '$' + propertyDetail.price/12 + '/mo' : ''}"></strong></p>
                             <div class="action">
                                 <button class="add-to-cart btn btn-default" type="button">Request a tour</button>
                                 <button class="contact-agent btn btn-outline-primary">Contact Agent</button>

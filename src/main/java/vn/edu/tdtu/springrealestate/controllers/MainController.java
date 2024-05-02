@@ -102,6 +102,7 @@ public class MainController {
         }
         User user = new User();
         user.setUsername(userDto.getUsername());
+        user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setRole(Role.USER);
