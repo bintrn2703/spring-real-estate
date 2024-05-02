@@ -169,7 +169,7 @@
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
                                         <a th:href="@{'/property-list/' + ${property.getId()}}">
-                                            <img class="img-fluid" th:src="@{${property.getThumbnailImage()}}" alt="">
+                                            <img class="img-fluid" th:src="@{${property.getThumbnailImage()}}" alt="thumbnail">
                                         </a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3"
                                              th:text="${property.getStatus()}">For Sell</div>

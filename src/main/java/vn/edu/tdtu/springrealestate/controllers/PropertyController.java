@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.tdtu.springrealestate.models.Property;
 import vn.edu.tdtu.springrealestate.models.User;
 import vn.edu.tdtu.springrealestate.services.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -66,12 +70,27 @@ public class PropertyController {
         return "create-property";
     }
     @PostMapping("/create-property")
-    public String createProperty(HttpServletRequest request, HttpSession session) {
+    public String createProperty(HttpServletRequest request, HttpSession session, @RequestParam("images") MultipartFile[] images) {
         String username = (String) session.getAttribute("username");
+        User user = (User) userService.loadUserByUsername(username);
+
+        String uploadDir = "./src/main/resources/static/img/";
+        for (MultipartFile image : images) {
+            // Tạo đường dẫn tới file
+            Path filePath = Paths.get(uploadDir + image.getOriginalFilename());
+
+            // Ghi file vào đường dẫn đã xác định
+            try {
+                Files.write(filePath, image.getBytes());
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Xử lý lỗi ở đây
+            }
+        }
+
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String formattedNow = now.format(formatter);
-        User user = (User) userService.loadUserByUsername(username);
 
         Property property = new Property();
         property.setUser(user);
@@ -89,6 +108,7 @@ public class PropertyController {
         property.setUploadDate(formattedNow);
         property.setContactPhone(request.getParameter("contactPhone"));
         property.setStatus("Available");
+        property.setThumbnailImage("/img/" + images[0].getOriginalFilename());
         propertyService.save(property);
 
         return "redirect:/yourHome";
@@ -102,14 +122,29 @@ public class PropertyController {
         return "edit-property";
     }
     @PostMapping("/yourHome/{id}/edit")
-    public String editProperty(@PathVariable(value="id") Long id, HttpServletRequest request, HttpSession session) {
+    public String editProperty(@PathVariable(value="id") Long id, HttpServletRequest request, HttpSession session, @RequestParam("images") MultipartFile[] images) {
         String username = (String) session.getAttribute("username");
+        User user = (User) userService.loadUserByUsername(username);
+
+        String uploadDir = "./src/main/resources/static/img/";
+        for (MultipartFile image : images) {
+            // Tạo đường dẫn tới file
+            Path filePath = Paths.get(uploadDir + image.getOriginalFilename());
+
+            // Ghi file vào đường dẫn đã xác định
+            try {
+                Files.write(filePath, image.getBytes());
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Xử lý lỗi ở đây
+            }
+        }
+
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String formattedNow = now.format(formatter);
-        User user = (User) userService.loadUserByUsername(username);
 
-        Property property = new Property();
+        Property property = propertyService.findById(id);
         property.setUser(user);
         property.setTitle(request.getParameter("title"));
         property.setType(request.getParameter("type"));
@@ -125,6 +160,7 @@ public class PropertyController {
         property.setUploadDate(formattedNow);
         property.setContactPhone(request.getParameter("contactPhone"));
         property.setStatus("Available");
+        property.setThumbnailImage("/img/" + images[0].getOriginalFilename());
         propertyService.save(property);
         return "redirect:/yourHome";
     }
