@@ -3,6 +3,8 @@ package vn.edu.tdtu.springrealestate.controllers;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +72,23 @@ public class MainController {
             return "login";
         }
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<String> loginPost(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password) {
+//        User request = new User();
+//        request.setUsername(username);
+//        request.setPassword(password);
+//        AuthenticationResponse response = authenticationService.authenticate(request);
+//        if (response != null) {
+//            session.setAttribute("token", response.getToken());
+//            session.setAttribute("username", username);
+//            System.out.println("Login success");
+//            return ResponseEntity.ok("Login success");
+//        } else {
+//            System.out.println("Login failed");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+//        }
+//    }
 
     @PostMapping("/register")
     public String registerPost(@ModelAttribute("user") UserDto userDto) {
