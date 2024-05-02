@@ -88,8 +88,44 @@ public class PropertyController {
         property.setYear(Long.parseLong(request.getParameter("year")));
         property.setUploadDate(formattedNow);
         property.setContactPhone(request.getParameter("contactPhone"));
+        property.setStatus("Available");
         propertyService.save(property);
 
+        return "redirect:/yourHome";
+    }
+    @GetMapping("/yourHome/{id}/edit")
+    public String editProperty(@PathVariable(value="id") Long id, Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        User user = (User) userService.loadUserByUsername(username);
+        Property property = propertyService.findById(id);
+        model.addAttribute("property", property);
+        return "edit-property";
+    }
+    @PostMapping("/yourHome/{id}/edit")
+    public String editProperty(@PathVariable(value="id") Long id, HttpServletRequest request, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String formattedNow = now.format(formatter);
+        User user = (User) userService.loadUserByUsername(username);
+
+        Property property = new Property();
+        property.setUser(user);
+        property.setTitle(request.getParameter("title"));
+        property.setType(request.getParameter("type"));
+        property.setPurpose(request.getParameter("purpose"));
+        property.setDescription(request.getParameter("description"));
+        property.setAddress(request.getParameter("address"));
+        property.setLocation(request.getParameter("location"));
+        property.setPrice(Double.parseDouble(request.getParameter("price")));
+        property.setArea(Double.parseDouble(request.getParameter("area")));
+        property.setBedroom(Integer.parseInt(request.getParameter("bedroom")));
+        property.setBathroom(Integer.parseInt(request.getParameter("bathroom")));
+        property.setYear(Long.parseLong(request.getParameter("year")));
+        property.setUploadDate(formattedNow);
+        property.setContactPhone(request.getParameter("contactPhone"));
+        property.setStatus("Available");
+        propertyService.save(property);
         return "redirect:/yourHome";
     }
     @GetMapping("/saved-categories")

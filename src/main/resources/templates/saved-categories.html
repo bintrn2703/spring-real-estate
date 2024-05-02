@@ -85,14 +85,14 @@
                 <a th:href="@{'/yourHome'}" class="themeBtn ripple-effect">Your Home</a>
             </div>
             <div class="container-fluid  margin">
-                <a th:href="@{'/otherHome'}" class="themeBtn ripple-effect">Other Home</a>
+                <a th:href="@{'/otherHome'}" class="themeBtn ripple-effect">Saved Home</a>
             </div>
         </div>
         <div class="row g-4">
             <div th:if="${other}" th:each="property : ${properties}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="property-item rounded overflow-hidden">
                     <div class="position-relative overflow-hidden">
-                        <a th:href="@{'/property/' + ${property.getId()}}">
+                        <a th:href="@{'/property-list/' + ${property.getId()}}">
                             <img class="img-fluid" th:src="@{${property.getThumbnailImage()}}" alt="">
                         </a>
                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3" th:text="${property.getStatus()}"></div>
@@ -101,7 +101,7 @@
 
                     <div class="p-4 pb-0">
                         <h5 class="text-primary mb-3" th:text="${property.getPrice()}"></h5>
-                        <a th:href="@{'/property/' + ${property.getId()}}" class="d-block h5 mb-2" th:text="${property.getTitle()}"></a>
+                        <a th:href="@{'/property-list/' + ${property.getId()}}" class="d-block h5 mb-2" th:text="${property.getTitle()}"></a>
                         <p>
                             <i class="fa fa-map-marker-alt text-primary me-2"></i>
                             <span th:text="${property.getLocation()}"></span>
@@ -127,7 +127,7 @@
             <div th:unless="${other}" th:each="property : ${otherProperties}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="property-item rounded overflow-hidden">
                     <div class="position-relative overflow-hidden">
-                        <a th:href="@{'/property/' + ${property.getId()}}">
+                        <a th:href="@{'/property-list/' + ${property.getId()}}">
                             <img class="img-fluid" th:src="@{${property.getThumbnailImage()}}" alt="">
                         </a>
                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3" th:text="${property.getStatus()}"></div>
@@ -135,8 +135,16 @@
                     </div>
 
                     <div class="p-4 pb-0">
-                        <h5 class="text-primary mb-3" th:text="${property.getPrice()}"></h5>
-                        <a th:href="@{'/property/' + ${property.getId()}}" class="d-block h5 mb-2" th:text="${property.getTitle()}"></a>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="text-primary mb-3" th:text="${property.getPrice()}"></h5>
+                            <a th:href="@{'/yourHome/{id}/edit'(id=${property.id})}">
+                                <button class="btn btn-primary" type="button" style="padding: 5px 12px;padding-top: 0px;padding-bottom: 0px;padding-right: 12px;height: 28.5938px;margin-top: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil-square">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
+                                </svg>Edit</button>
+                            </a>
+                        </div>
+                        <a th:href="@{'/property-list/' + ${property.getId()}}" class="d-block h5 mb-2" th:text="${property.getTitle()}"></a>
                         <p>
                             <i class="fa fa-map-marker-alt text-primary me-2"></i>
                             <span th:text="${property.getLocation()}"></span>
@@ -189,22 +197,22 @@
                     <h5 class="text-white mb-4">Photo Gallery</h5>
                     <div class="row g-2 pt-2">
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-1.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-1.jpg}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-2.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-2.jpg}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-3.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-3.jpg}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-4.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-4.jpg}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-5.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-5.jpg}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid rounded bg-light p-1" src="img/property-6.jpg" alt="">
+                            <img class="img-fluid rounded bg-light p-1" th:src="@{/img/property-6.jpg}" alt="">
                         </div>
                     </div>
                 </div>
